@@ -15,6 +15,10 @@ const Modal = ({ children, isOpen, handleClose }) => {
         };
     }, [handleClose]);
 
+    const handleStopPropagation = (e) => {
+        e.stopPropagation();
+    }
+
     return (
         <ReactPortal wrapperId="react-portal-modal">
             <CSSTransition
@@ -24,11 +28,13 @@ const Modal = ({ children, isOpen, handleClose }) => {
                 classNames="modal"
                 nodeRef={nodeRef}
             >
-                <div className="modal" ref={nodeRef}>
+                <div className="modal" ref={nodeRef} onClick={handleClose}>
                     <button onClick={handleClose} className="button" style={{ top: "20%" }}>
                         Close
                     </button>
-                    <div className="modal-content">{children}</div>
+                    <div className="modal-content" onClick={handleStopPropagation}>
+                        {children}
+                    </div>
                 </div>
             </CSSTransition>
         </ReactPortal>
